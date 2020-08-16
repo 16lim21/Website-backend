@@ -51,10 +51,10 @@ app.post('/api', (req,res) => {
   var mailOptions = {
     from: data.email,
     to: process.env.EMAIL,
-    subject: `New Message from ${data.name}`,
-    html: `<p>${data.name}</p>
-            <p>${data.email}</p>
-            <p>${data.message}</p>`
+    subject: `New Website Message from ${data.name}`,
+    html: `<p>Name: ${data.name}</p>
+            <p>Email: ${data.email}</p>
+            <p>Message: ${data.message}</p>`
   };
 
   transporter.sendMail(mailOptions, 
