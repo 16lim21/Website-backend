@@ -17,11 +17,6 @@ app.listen(port, () => {
   console.log('We are live on port 4444');
 });
 
-
-app.get('/', (req, res) => {
-  res.send('Post to /api');
-})
-
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   port: 465,
