@@ -6,7 +6,6 @@ const cors = require('cors');
 const app = express();
 const port = 4444;
 
-const client_id = require('./client_id.json');
 require('dotenv').config();
 
 app.use(bodyParser.json());
