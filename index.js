@@ -6,10 +6,11 @@ const cors = require('cors');
 const app = express();
 const port = 4444;
 
-require('./config.env').config();
+const client_id = require('./client_id.json');
+require('dotenv').config();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(cors());
 
 app.listen(port, () => {
@@ -22,11 +23,16 @@ app.get('/', (req, res) => {
 })
 
 var transporter = nodemailer.createTransport({
-  service: 'Gmail',
+  service: 'gmail',
   port: 465,
+  secure: true,
   auth: {
+    type: 'OAuth2',
     user: process.env.EMAIL,
-    pass: process.env.EMAIL_PASS
+    clientId: client_id.web.client_id,
+    clientSecret: client_id.web.client_secret,
+    refreshToken: process.env.REFRESH_TOKEN,
+    accessToken: process.env.ACCESS_TOKEN
   }
 });
 
@@ -39,6 +45,7 @@ transporter.verify((error, success) => {
 });
 
 app.post('/api', (req,res) => {
+  console.log("received")
   var data = req.body;
 
   var mailOptions = {
@@ -54,6 +61,7 @@ app.post('/api', (req,res) => {
       (error, response) => {
         if (error) {
           res.send(error)
+          console.log(error)
         } else {
           res.send('Success')
         }
